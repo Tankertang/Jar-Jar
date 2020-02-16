@@ -47,13 +47,17 @@
 
             //sets role of player as hunter or ghost
             let position = Math.random() 
+            let transparency;
             if (position > 0.5) {
                     position = "hunter";
+                    transparency = 0.0;
                 } else {
                     position = "ghost";
+                    transparency = 1.0;
                 }
             let user;
             let enemy;
+            let enemyUsername = prompt("enemy username?");
             var lastX = 180;
             var lastY = 180;
 
@@ -63,10 +67,8 @@
 
                 if (position == 'ghost') {
                     var img = document.getElementById("ghost");
-                    var enemyImg = document.getElementById('hunter');
                 } else {
                     var img = document.getElementById("hunter");
-                    var enemyImg = document.getElementById('ghost');
                 }
 
 
@@ -78,11 +80,14 @@
                 ctx.drawImage(img, lastX, lastY, width, height);
 
                 //enemy information and drawing
-                firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                //
+                firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
                         enemy = doc.data();
-                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = transparency;
+                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
                     } else {
                         console.log("no such doc");
                     }
@@ -96,11 +101,13 @@
                     if (lastY > 0) {
                         ctx.clearRect(0, 0, c.width, c.height);
                         ctx.drawImage(img, lastX, lastY - amount, width, height);
-                        firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                        firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
                             if (doc.exists) {
                                 console.log(doc.data());
                                 enemy = doc.data();
-                                ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                                ctx.globalAlpha = transparency;
+                                ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                                ctx.globalAlpha = 1.0;
                             } else {
                                 console.log("no such doc");
                             }
@@ -114,17 +121,19 @@
                         ctx.drawImage(img, lastX, lastY, width, height)
                     }
                 }
-                
+
                 //goes down 1
                 function moveDown(amount) {
                    if (lastY < 550) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
-                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
                         enemy = doc.data();
-                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = transparency;
+                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
                     } else {
                         console.log("no such doc");
                     }
@@ -142,11 +151,13 @@
                     if(lastX > 0 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
-                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
                         enemy = doc.data();
-                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = transparency;
+                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
                     } else {
                         console.log("no such doc");
                     }
@@ -164,11 +175,13 @@
                     if (lastX < 550 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
-                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
                         enemy = doc.data();
-                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = transparency;
+                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
                     } else {
                         console.log("no such doc");
                     }
@@ -194,10 +207,10 @@
                     }
                 }, false);
             }
+            
 
             function start() {
                 user = document.getElementById('username').value; 
-
                 firebase.firestore().collection('Players').doc(user).set({
                     username: user,
                     position: position,
@@ -205,11 +218,10 @@
                     yPos: lastY,
                 })
 
-                document.getElementById('play-page').innerHTML = 'Welcome ' + user + '! You are a ' + position + '!';
+                document.getElementById('play-page').innerHTML = '<p>Welcome ' + user + '! You are a ' + position + '!</p>';
                 canvas();
-            };
+            }
 
-            
         </script>
     </body>
 </html>                  
