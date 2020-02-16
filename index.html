@@ -9,11 +9,22 @@
             body {
                 background: rgb(212, 58, 58);
             }
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
-        Hello there! Huh?!
-
+        <h1>Ghost Hunter</h1>
+        <div id="play-page" class="">
+            <p>Username:
+                <input id = "username" type = "text"/>
+            </p>
+            <p>
+                <button onclick='start();'>Play Now!</button>
+            </p>
+        </div>
+        
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyB6tUD-ar7ENW8y3vh5Y-HPmpICCxrEwe8",
@@ -29,6 +40,25 @@
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
 
+            function start() {
+                let user = document.getElementById('username').value;
+                let position = Math.random()  
+
+                if (position>=0.5) {
+                    position = "seeker";
+                } else {
+                    position = "ghost";
+                }
+
+                firebase.firestore().collection('Players').add({
+                    username: user,
+                    position: position,
+                })
+
+                document.getElementById('play-page').className = 'hidden';
+            }
+
+            
         </script>
     </body>
 </html>
