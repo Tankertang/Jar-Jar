@@ -7,7 +7,7 @@
         
         <style>
             body {
-                background: rgb(212, 58, 58);
+                background: rgb(250, 249, 249);
             }
             .hidden {
                 display: none;
@@ -25,6 +25,42 @@
             </p>
         </div>
         
+
+        <canvas id="PlayZone" width= "600" height = "600" style="border:2px solid black" ></canvas>
+        <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
+
+       <script>window.onload = function() {
+        var c = document.getElementById("PlayZone");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("ghost");
+
+        var lastX = 180;
+        var lastY = 180;
+        var width = 150;
+        var height = 180;
+
+        ctx.drawImage(img, lastX, lastY, width, height);
+
+        function moveUp(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX, lastY - amount, width, height);
+            lastY = lastY - amount
+        }
+
+        function moveDown(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX, lastY + amount, width, height);
+            lastY = lastY + amount;
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (event.keyCode === 87) {
+                moveUp(10);
+            }
+        }, false);
+      }
+      </script>
+
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyB6tUD-ar7ENW8y3vh5Y-HPmpICCxrEwe8",
@@ -59,6 +95,9 @@
             }
 
             
+        </script>
+        <script>
+            // var countDown = new Date.getTime;
         </script>
     </body>
 </html>
