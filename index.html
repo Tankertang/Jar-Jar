@@ -20,6 +20,7 @@
         </style>
          
         <script type="text/javascript">
+            let user;
             function deleteChars() {
                 firebase.firestore().collection("Players").doc(enemyOneUsername).delete().then(function() {
                     console.log("Document successfully deleted!");
@@ -43,7 +44,11 @@
                 });
             }
 
+
+            let userInfo; 
+
             function startTimer(){
+                     
                 var timer = document.getElementById("myTimer").innerHTML;
                 var arr = timer.split(":");
                 var hour = arr[0];
@@ -52,6 +57,9 @@
                 if (sec == 0) {
                     if (min == 0){
                         if (hour == 0){
+                            firebase.firestore().collection('Players').where("position", "==", "ghost").update({
+                                'win': true
+                            })
                           alert("Game Over! Ghosts continue to haunt another day!");
                           deleteChars();
                           let restart = prompt("Play again? Reply y/n");
@@ -133,7 +141,6 @@
                     ghostTransparency = 1.0;
                     hunterTransparency = 1.0;
                 }
-            let user;
             let enemyOne;
             let enemyOneUsername = prompt("1st enemy username?");
             let enemyTwo;
@@ -234,13 +241,15 @@
                                 //win cond
                                 if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -266,11 +275,11 @@
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -294,13 +303,14 @@
                                 //win cond
                                 if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -339,11 +349,11 @@
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -369,11 +379,11 @@
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -399,11 +409,11 @@
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -439,13 +449,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -469,13 +480,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -499,13 +511,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -541,13 +554,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -571,13 +585,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -601,13 +616,14 @@
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        
                                         alert("winner winner chicken dinner!")
                                         deleteChars();
-                                        let restart = prompt("Play again? Reply y/n");
-                                        console.log(restart);
-                                        if (restart == 'y') {
+                                        // let restart = prompt("Play again? Reply y/n");
+                                        // console.log(restart);
+                                        // if (restart == 'y') {
                                             window.location.reload();
-                                        }
+                                        // }
                                         return;
                                     }
                                 }
@@ -645,7 +661,7 @@
                     username: user,
                     position: position,
                     xPos: lastX,
-                    yPos: lastY,
+                    yPos: lastY
                 })
  
                 document.getElementById('play-page').innerHTML = '<p>Welcome ' + user + '! You are a ' + position + '!</p>';
