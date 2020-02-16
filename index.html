@@ -10,6 +10,53 @@
                 background: rgb(250, 249, 249);
             }
         </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        p {
+          text-align: center;
+          font-size: 60px;
+          margin-top: 0px;
+        }
+        </style>
+         
+        <script type="text/javascript">
+            function startTimer(){
+                var timer = document.getElementById("myTimer").innerHTML;
+                var arr = timer.split(":");
+                var hour = arr[0];
+                var min = arr[1];
+                var sec = arr[2];
+                if (sec == 0) {
+                    if (min == 0){
+                        if (hour == 0){
+                          alert("Game Over!");
+                          window.location.reload();
+                          return;
+                        }
+                        hour --;
+                        min = 60;
+                        if (hour < 10) {
+                            hour = "0" + hour;
+                        }
+                    }
+                    min --;
+                    if (min < 10) {
+                        min = "0" + min;
+                    }
+                    sec = 59;
+                }else
+                  sec --;
+                  if (sec < 10) {
+                      sec = "0" + sec;
+                  }
+                  document.getElementById("myTimer").innerHTML = hour + ":" + min + ":" + sec;
+                  setTimeout(startTimer, 1000);
+            
+            }
+        </script>
+    <p><span id="myTimer" style="color: #000; font-size: 100%;">00:02:00</span></p>
+    <button onclick="startTimer();">Play Now!</button>
+    
     </head>
     <body>
         <h1>Ghost Hunter!!</h1>
