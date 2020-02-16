@@ -55,7 +55,8 @@
                           alert("Game Over! Ghosts continue to haunt another day!");
                           deleteChars();
                           let restart = prompt("Play again? Reply y/n");
-                          if (restart.lower == 'y') {
+                          console.log(restart);
+                          if (restart == 'y') {
                             window.location.reload();
                           }
                           return;
