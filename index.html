@@ -10,6 +10,53 @@
                 background: rgb(250, 249, 249);
             }
         </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        p {
+          text-align: center;
+          font-size: 60px;
+          margin-top: 0px;
+        }
+        </style>
+         
+        <script type="text/javascript">
+            function startTimer(){
+                var timer = document.getElementById("myTimer").innerHTML;
+                var arr = timer.split(":");
+                var hour = arr[0];
+                var min = arr[1];
+                var sec = arr[2];
+                if (sec == 0) {
+                    if (min == 0){
+                        if (hour == 0){
+                          alert("Game Over!");
+                          window.location.reload();
+                          return;
+                        }
+                        hour --;
+                        min = 60;
+                        if (hour < 10) {
+                            hour = "0" + hour;
+                        }
+                    }
+                    min --;
+                    if (min < 10) {
+                        min = "0" + min;
+                    }
+                    sec = 59;
+                }else
+                  sec --;
+                  if (sec < 10) {
+                      sec = "0" + sec;
+                  }
+                  document.getElementById("myTimer").innerHTML = hour + ":" + min + ":" + sec;
+                  setTimeout(startTimer, 1000);
+            
+            }
+        </script>
+    <p><span id="myTimer" style="color: #000; font-size: 100%;">00:02:00</span></p>
+    <button onclick="startTimer();">Play Now!</button>
+    
     </head>
     <body>
         <h1>Ghost Hunter!!</h1>
@@ -22,14 +69,14 @@
             </p>
         </div>
         
-
+ 
         <canvas id="PlayZone" width= "600" height = "600" style="border:2px solid black" ></canvas>
         <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
         <img id= "hunter" src = "https://tse1.mm.bing.net/th?id=OIP.9dqPj_o8pAZMySoibk-LQQHaRY&pid=Api&P=0&w=300&h=300" width="20px" height="20px" alt="Destroyer">
-
+ 
        <script>
       </script>
-
+ 
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyB6tUD-ar7ENW8y3vh5Y-HPmpICCxrEwe8",
@@ -44,7 +91,7 @@
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
-
+ 
             //sets role of player as hunter or ghost
             let position = Math.random() 
             let transparency;
@@ -60,25 +107,25 @@
             let enemyUsername = prompt("enemy username?");
             var lastX = 180;
             var lastY = 180;
-
+ 
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
-
+ 
                 if (position == 'ghost') {
                     var img = document.getElementById("ghost");
                 } else {
                     var img = document.getElementById("hunter");
                 }
-
-
+ 
+ 
                 var width = 40;
                 var height = 40;
                 var rightBorder = canvas.width - img.width;
-
+ 
                
                 ctx.drawImage(img, lastX, lastY, width, height);
-
+ 
                 //enemy information and drawing
                 //
                 firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
@@ -121,7 +168,7 @@
                         ctx.drawImage(img, lastX, lastY, width, height)
                     }
                 }
-
+ 
                 //goes down 1
                 function moveDown(amount) {
                    if (lastY < 550) {
@@ -194,7 +241,7 @@
                     })
                     }
                 }
-
+ 
                 document.addEventListener("keydown", function (event) {
                     if (event.keyCode === 87 && lastX>0) {
                         moveUp(10);
@@ -208,7 +255,7 @@
                 }, false);
             }
             
-
+ 
             function start() {
                 user = document.getElementById('username').value; 
                 firebase.firestore().collection('Players').doc(user).set({
@@ -217,11 +264,12 @@
                     xPos: lastX,
                     yPos: lastY,
                 })
-
+ 
                 document.getElementById('play-page').innerHTML = '<p>Welcome ' + user + '! You are a ' + position + '!</p>';
                 canvas();
             }
-
+ 
         </script>
     </body>
-</html>                  
+</html>
+
