@@ -107,14 +107,14 @@
  
         <script>
             var firebaseConfig = {
-                apiKey: "AIzaSyB6tUD-ar7ENW8y3vh5Y-HPmpICCxrEwe8",
-                authDomain: "javawebsite-ab223.firebaseapp.com",
-                databaseURL: "https://javawebsite-ab223.firebaseio.com",
-                projectId: "javawebsite-ab223",
-                storageBucket: "javawebsite-ab223.appspot.com",
-                messagingSenderId: "372498914074",
-                appId: "1:372498914074:web:b4687c7c7dbae9b9e0eaa3",
-                measurementId: "G-SJEERR0S09"
+            apiKey: "AIzaSyCNyn2NJqJRIp5f_ya1O0XObA4i5Sq8gnQ",
+            authDomain: "jar-jar-5933d.firebaseapp.com",
+            databaseURL: "https://jar-jar-5933d.firebaseio.com",
+            projectId: "jar-jar-5933d",
+            storageBucket: "jar-jar-5933d.appspot.com",
+            messagingSenderId: "636468591443",
+            appId: "1:636468591443:web:07a82aa53c1b38e97dffa6",
+            measurementId: "G-5M4HSRW3XN"
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
@@ -140,8 +140,23 @@
             let enemyTwoUsername = prompt("2nd enemy username?");
             let enemyThree;
             let enemyThreeUsername = prompt("3rd enemy username?");
-            var lastX = 180;
-            var lastY = 180;
+            var lastX = Math.floor(Math.random()*600);
+            var lastY = Math.floor(Math.random()*600);
+
+            // function enemyOneUsernameWin() {
+            //     let xDistanceOne = Math.abs(enemyOne.xPos-user.xPos);
+            //     let yDistanceOne = Math.abs(enemyOne.yPos-user.yPos);
+            //     let xDistanceTwo = Math.abs(enemyTwo.xPos-user.xPos);
+            //     let yDistanceTwo = Math.abs(enemyTwo.yPos-user.yPos);
+            //     let xDistanceThree = Math.abs(enemyThree.xPos-user.xPos);
+            //     let yDistanceThree = Math.abs(enemyThree.yPos-user.yPos);
+                
+            //     if (user.position == 'hunter') {
+            //         if((xDistanceOne <= 30 || yDistanceOne <=30) && enemyThree.position == 'ghost') {
+            //             alert("Winner winner chicken dinner for the hunters!");
+            //         };
+            //     };
+            // };
  
             function canvas() {
                 var c = document.getElementById("PlayZone");
@@ -231,6 +246,26 @@
                                 }
                                 ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
+                                //win cond
+                                console.log(lastX)
+                                console.log(enemyOne.xPos)
+
+                                if(position == 'hunter') {
+                                    if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        console.log("winner!")
+                                    }
+
+                                }
+
+                                // let xDistanceOne = Math.abs(enemyOne.xPos-user.xPos);
+                                // let yDistanceOne = Math.abs(enemyOne.yPos-user.yPos);
+                                // console.log(enemyOne.xPos)
+                                // console.log(enemyOne.ypos)
+                                // if (user.position == 'hunter') {
+                                //     if(yDistanceOne <= 100 && enemyOne.position == 'ghost') {
+                                //         console.log("Winner winner chicken dinner for the hunters!");
+                                //     };
+                                // };
                             } else {
                                 console.log("no such doc");
                             }
@@ -248,6 +283,14 @@
                                 }
                                 ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
+                                //win cond
+                                // let xDistanceTwo = Math.abs(enemyTwo.xPos-user.xPos);
+                                // let yDistanceTwo = Math.abs(enemyTwo.yPos-user.yPos);
+                                // if (user.position == 'hunter') {
+                                //     if(yDistanceTwo <= 100 && enemyTwo.position == 'ghost') {
+                                //         console.log("Winner winner chicken dinner for the hunters!");
+                                //     };
+                                // };
                             } else {
                                 console.log("no such doc");
                             }
@@ -265,6 +308,14 @@
                                 }
                                 ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
+                                //win cond
+                                // let xDistanceThree = Math.abs(enemyThree.xPos-user.xPos);
+                                // let yDistanceThree = Math.abs(enemyThree.yPos-user.yPos);
+                                // if (user.position == 'hunter') {
+                                //     if(yDistanceThree <= 100 && enemyThree.position == 'ghost') {
+                                //         console.log("Winner winner chicken dinner for the hunters!");
+                                //     };
+                                // };
                             } else {
                                 console.log("no such doc");
                             }
@@ -276,7 +327,7 @@
                                 'yPos': lastY
                             })
                         ctx.drawImage(img, lastX, lastY, width, height)
-                    }
+                    };
                 }
  
                 //goes down 1
@@ -339,7 +390,8 @@
                     firebase.firestore().collection('Players').doc(user).update({
                         'yPos': lastY
                     })
-                   }
+                   };
+                   //enemyOneUsernameWin();
                 }
                 //goes left 1
                 function moveLeft(amount) {
@@ -402,6 +454,7 @@
                         'xPos': lastX
                     })
                     }
+                    //enemyOneUsernameWin();
                 }
                 //goes right 1
                 function moveRight(amount) {
