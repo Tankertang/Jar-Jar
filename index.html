@@ -68,12 +68,7 @@
                 var height = 40;
 
                 ctx.drawImage(img, lastX, lastY, width, height
-                function getRandomPosition(ghost) {
-	                var x = document.body.offsetHeight-ghost.clientHeight;
-	                var y = document.body.offsetWidth-ghost.clientWidth;
-	                var randomX = Math.floor(Math.random()*x);
-	                var randomY = Math.floor(Math.random()*y);
-	                return [randomX,randomY];
+                
                 }
                 //goes up 1
                 function moveUp(amount) {
