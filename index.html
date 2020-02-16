@@ -51,42 +51,73 @@
 
 
             let userInfo; 
-            let timerStart;
             let mechanics;
+            let winStatus;
 
             function startTimer(){
                 firebase.firestore().collection("Game").doc('Mechanics').get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
                         mechanics = doc.data();
-                        if (mechanics.timerStart == false) {
+                        if (mechanics.TimerStart == false) {
                             firebase.firestore().collection('Game').doc('Mechanics').update({
-                                'timerStart': true,
+                                TimerStart: true,
                             })
                         }
-                        console.log(mechanics.timerStart);
+                        console.log(mechanics.TimerStart);
+                        if (mechanics.TimerStart == true) {
+                            updateTimer();
+                            checkWin();
+                        }
                     }
-                }
-            };
+                })
+            }
+            function checkWin() {
+                firebase.firestore().collection('Game').doc('Mechanics').get().then(function(doc) {
+                    if (doc.exists) {
+                        winStatus = doc.data();
+                        if (winStatus.Winner == 0) {
+                            alert("Ghosts win!")
+                        } else if (winStatus.Winner > 0) {
+                            alert("Hunters win!")
+                        }
+                    }
+                })
+            }
 
             function updateTimer() {
+                checkWin();
+                var timer = document.getElementById('myTimer').innerHTML;
 
-                var timer = document.getElementById("myTimer").innerHTML;
                 var arr = timer.split(":");
                 var hour = arr[0];
                 var min = arr[1];
                 var sec = arr[2];
+
+                firebase.firestore().collection('Game').doc('Mechanics').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        mechanics = doc.data();
+                        sec = mechanics.Timer;
+                    } else {
+                        console.log('no doc')
+                    }
+                })
+
                 if (sec == 0) {
                     if (min == 0){
                         if (hour == 0){
-                          alert("Game Over! Ghosts continue to haunt another day!");
-                          deleteChars();
-                          let restart = prompt("Play again? Reply y/n");
-                          console.log(restart);
-                          if (restart == 'y') {
-                            window.location.reload();
-                          }
-                          return;
+                            firebase.firestore().collection('Game').doc('Mechanics').update({
+                                Winner: 0,
+                            })
+                        //   alert("Game Over! Ghosts continue to haunt another day!");
+                        //   deleteChars();
+                        //   let restart = prompt("Play again? Reply y/n");
+                        //   console.log(restart);
+                        //   if (restart == 'y') {
+                        //     window.location.reload();
+                        //   }
+                        //   return;
                         }
                         hour --;
                         min = 60;
@@ -104,8 +135,11 @@
                   if (sec < 10) {
                       sec = "0" + sec;
                   }
+                  firebase.firestore().collection('Game').doc('Mechanics').update({
+                      'Timer': sec,
+                  });
                   document.getElementById("myTimer").innerHTML = hour + ":" + min + ":" + sec;
-                  setTimeout(startTimer, 1000);
+                  setTimeout(updateTimer, 1000);
             
             }
         </script>
@@ -121,8 +155,7 @@
             </p>
         </div>
         <p>
-            <span id='myTimer'>60 seconds</span>
-            <!-- <span id="myTimer" style="color: #000; font-size: 20px;">00:01:00</span> -->
+            <span id="myTimer" style="color: #000; font-size: 20px;">00:01:00</span>
             <button onclick="start();">Play Now!</button>
         </p>
         
@@ -199,7 +232,7 @@
                         if (enemyOne.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
                         } else {
-                            ctx.globalAlpha = ghostTransparency;
+                            ////ctx.globalAlpha = ghostTransparency;
                         }
                         ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -216,7 +249,7 @@
                         if (enemyTwo.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
                         } else {
-                            ctx.globalAlpha = ghostTransparency;
+                            ////ctx.globalAlpha = ghostTransparency;
                         }
                         ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -233,7 +266,7 @@
                         if (enemyThree.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
                         } else {
-                            ctx.globalAlpha = ghostTransparency;
+                            ////ctx.globalAlpha = ghostTransparency;
                         }
                         ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -257,23 +290,25 @@
                                 if (enemyOne.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
                                 } else {
-                                    ctx.globalAlpha = ghostTransparency;
+                                    //ctx.globalAlpha = ghostTransparency;
                                 }
                                 ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
                                 if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
-                                        
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        console.log(typeof user)
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
                                         // let restart = prompt("Play again? Reply y/n");
                                         // console.log(restart);
                                         // if (restart == 'y') {
-                                            window.location.reload();
+                                            // window.location.reload();
                                         // }
-                                        return;
+                                        // return;
                                     }
                                 }
                             } else {
@@ -289,21 +324,24 @@
                                 if (enemyTwo.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
                                 } else {
-                                    ctx.globalAlpha = ghostTransparency;
+                                    //ctx.globalAlpha = ghostTransparency;
                                 }
                                 ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
                                 if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
                                         // let restart = prompt("Play again? Reply y/n");
                                         // console.log(restart);
                                         // if (restart == 'y') {
-                                            window.location.reload();
+                                            // window.location.reload();
                                         // }
-                                        return;
+                                        // return;
                                     }
                                 }
                             } else {
@@ -319,22 +357,24 @@
                                 if (enemyThree.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
                                 } else {
-                                    ctx.globalAlpha = ghostTransparency;
+                                    //ctx.globalAlpha = ghostTransparency;
                                 }
                                 ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
                                 if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                             } else {
@@ -363,21 +403,24 @@
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -393,21 +436,24 @@
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -423,21 +469,24 @@
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -465,22 +514,24 @@
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -496,22 +547,24 @@
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -527,22 +580,24 @@
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -570,22 +625,24 @@
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -601,22 +658,24 @@
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                        // alert("winner winner chicken dinner!")
+                                        // deleteChars();
+                                        // // let restart = prompt("Play again? Reply y/n");
+                                        // // console.log(restart);
+                                        // // if (restart == 'y') {
+                                        //     window.location.reload();
+                                        // // }
+                                        // return;
                                     }
                                 }
                         } else {
@@ -632,22 +691,24 @@
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
                             } else {
-                                ctx.globalAlpha = ghostTransparency;
+                                //ctx.globalAlpha = ghostTransparency;
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
                             //win cond
                             if(position == 'hunter') {
                                     if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
-                                        
-                                        alert("winner winner chicken dinner!")
-                                        deleteChars();
-                                        // let restart = prompt("Play again? Reply y/n");
-                                        // console.log(restart);
-                                        // if (restart == 'y') {
-                                            window.location.reload();
-                                        // }
-                                        return;
+                                        firebase.firestore().collection('Game').doc('Mechanics').update({
+                                            Winner: 1,
+                                        })
+                                    //     alert("winner winner chicken dinner!")
+                                    //     deleteChars();
+                                    //     // let restart = prompt("Play again? Reply y/n");
+                                    //     // console.log(restart);
+                                    //     // if (restart == 'y') {
+                                    //         window.location.reload();
+                                    //     // }
+                                    //     return;
                                     }
                                 }
                         } else {
@@ -678,10 +739,6 @@
 
 
             function start() {
-                console.log(user,
-position,
-lastX,
-lastY)
                 startTimer();
                 user = document.getElementById('username').value; 
                 firebase.firestore().collection('Players').doc(user).set({
