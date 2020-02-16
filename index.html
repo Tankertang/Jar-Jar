@@ -52,8 +52,7 @@
                 } else {
                     position = "ghost";
                 }
-
-            // window.onload = 
+            
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
@@ -116,14 +115,11 @@
                     position: position,
                 })
 
-                document.getElementById('play-page').innerHTML = 'Welcome! You are a ' + position + '!';
+                document.getElementById('play-page').innerHTML = 'Welcome ' + user + '! You are a ' + position + '!';
                 canvas();
             }
 
             
-        </script>
-        <script>
-            // var countDown = new Date.getTime;
         </script>
     </body>
 </html>
