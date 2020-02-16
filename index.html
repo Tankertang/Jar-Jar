@@ -20,10 +20,33 @@
         var c = document.getElementById("PlayZone");
         var ctx = c.getContext("2d");
         var img = document.getElementById("ghost");
-        ctx.drawImage(img, 180, 180, 150, 180);
+
+        var lastX = 180;
+        var lastY = 180;
+        var width = 150;
+        var height = 180;
+
+        ctx.drawImage(img, lastX, lastY, width, height);
+
+        function moveUp(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX, lastY - amount, width, height);
+            lastY = lastY - amount
+        }
+
+        function moveDown(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX, lastY + amount, width, height);
+            lastY = lastY + amount;
+        }
+
+        document.addEventListener("keydown", function (event) {
+            if (event.keyCode === 87) {
+                moveUp(10);
+            }
+        }, false);
       }
       </script>
-       
 
         <script>
             var firebaseConfig = {
@@ -42,7 +65,7 @@
 
         </script>
         <script>
-            var countDown = new Date.getTime;
+            // var countDown = new Date.getTime;
         </script>
     </body>
 </html>
