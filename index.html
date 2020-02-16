@@ -35,8 +35,8 @@
 
         var lastX = 180;
         var lastY = 180;
-        var width = 150;
-        var height = 180;
+        var width = 40;
+        var height = 40;
 
         ctx.drawImage(img, lastX, lastY, width, height);
 
@@ -52,9 +52,27 @@
             lastY = lastY + amount;
         }
 
+        function moveLeft(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX - amount, lastY, width, height);
+            lastX = lastX - amount
+        }
+
+        function moveRight(amount) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(img, lastX + amount, lastY, width, height);
+            lastX = lastX + amount;
+        }
+
         document.addEventListener("keydown", function (event) {
             if (event.keyCode === 87) {
                 moveUp(10);
+            } else if (event.keyCode === 83){
+                moveDown(10);
+            } else if (event.keyCode === 65){
+                moveLeft(10);
+            } else if (event.keyCode === 68){
+                moveRight(10);
             }
         }, false);
       }
