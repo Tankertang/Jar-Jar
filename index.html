@@ -9,17 +9,32 @@
             body {
                 background: rgb(250, 249, 249);
             }
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
+        <h1>Ghost Hunter</h1>
+        <div id="play-page" class="">
+            <p>Username:
+                <input id = "username" type = "text"/>
+            </p>
+            <p>
+                <button onclick='start();'>Play Now!</button>
+            </p>
+        </div>
+        
 
         <canvas id="PlayZone" width= "600" height = "600" style="border:2px solid black" ></canvas>
         <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
+        <img id= "hunter" src = "https://tse1.mm.bing.net/th?id=OIP.9dqPj_o8pAZMySoibk-LQQHaRY&pid=Api&P=0&w=300&h=300" width="20px" height="20px" alt="Destroyer">
 
        <script>window.onload = function() {
         var c = document.getElementById("PlayZone");
         var ctx = c.getContext("2d");
         var img = document.getElementById("ghost");
+        var img = document.getElementById("hunter");
 
         var lastX = 180;
         var lastY = 180;
@@ -81,6 +96,25 @@
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
 
+            function start() {
+                let user = document.getElementById('username').value;
+                let position = Math.random()  
+
+                if (position>=0.5) {
+                    position = "seeker";
+                } else {
+                    position = "ghost";
+                }
+
+                firebase.firestore().collection('Players').add({
+                    username: user,
+                    position: position,
+                })
+
+                document.getElementById('play-page').className = 'hidden';
+            }
+
+            
         </script>
         <script>
             // var countDown = new Date.getTime;
