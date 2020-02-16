@@ -52,46 +52,121 @@
                 } else {
                     position = "ghost";
                 }
-            
+            let user;
+            let enemy;
+            var lastX = 180;
+            var lastY = 180;
+
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
 
                 if (position == 'ghost') {
                     var img = document.getElementById("ghost");
+                    var enemyImg = document.getElementById('hunter');
                 } else {
                     var img = document.getElementById("hunter");
+                    var enemyImg = document.getElementById('ghost');
                 }
 
-                var lastX = 180;
-                var lastY = 180;
+
                 var width = 40;
                 var height = 40;
 
                 ctx.drawImage(img, lastX, lastY, width, height);
 
+                //enemy information and drawing
+                firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemy = doc.data();
+                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
+                
+
                 function moveUp(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY - amount, width, height);
+                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemy = doc.data();
+                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
                     lastY = lastY - amount
+                    firebase.firestore().collection('Players').doc(user).update({
+                        'yPos': lastY
+                    })
                 }
 
                 function moveDown(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
+                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemy = doc.data();
+                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
                     lastY = lastY + amount;
+                    firebase.firestore().collection('Players').doc(user).update({
+                        'yPos': lastY
+                    })
                 }
 
                 function moveLeft(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
+                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemy = doc.data();
+                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
                     lastX = lastX - amount
+                    firebase.firestore().collection('Players').doc(user).update({
+                        'xPos': lastX
+                    })
                 }
 
                 function moveRight(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
+                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemy = doc.data();
+                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
                     lastX = lastX + amount;
+                    firebase.firestore().collection('Players').doc(user).update({
+                        'xPos': lastX
+                    })
                 }
 
                 document.addEventListener("keydown", function (event) {
@@ -108,16 +183,18 @@
             }
 
             function start() {
-                let user = document.getElementById('username').value; 
+                user = document.getElementById('username').value; 
 
-                firebase.firestore().collection('Players').add({
+                firebase.firestore().collection('Players').doc(user).set({
                     username: user,
                     position: position,
+                    xPos: lastX,
+                    yPos: lastY,
                 })
 
                 document.getElementById('play-page').innerHTML = 'Welcome ' + user + '! You are a ' + position + '!';
                 canvas();
-            }
+            };
 
             
         </script>
