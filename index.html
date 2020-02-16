@@ -30,58 +30,7 @@
         <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
         <img id= "hunter" src = "https://tse1.mm.bing.net/th?id=OIP.9dqPj_o8pAZMySoibk-LQQHaRY&pid=Api&P=0&w=300&h=300" width="20px" height="20px" alt="Destroyer">
 
-       <script>window.onload = function() {
-        var c = document.getElementById("PlayZone");
-        var ctx = c.getContext("2d");
-        var img = document.getElementById("ghost");
-        var img = document.getElementById("hunter");
-
-        var lastX = 180;
-        var lastY = 180;
-        var width = 40;
-        var height = 40;
-
-        ctx.drawImage(img, lastX, lastY, width, height);
-
-        function moveUp(amount) {
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(img, lastX, lastY - amount, width, height);
-            lastY = lastY - amount
-        }
-
-        function moveDown(amount) {
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(img, lastX, lastY + amount, width, height);
-            lastY = lastY + amount;
-        }
-
-        function moveLeft(amount) {
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(img, lastX - amount, lastY, width, height);
-            lastX = lastX - amount
-        }
-
-        function moveRight(amount) {
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(img, lastX + amount, lastY, width, height);
-            lastX = lastX + amount;
-        }
-
-        document.addEventListener("keydown", function (event) {
-            if (event.keyCode === 87) {
-                moveUp(10);
-            } else if (event.keyCode === 83){
-                moveDown(10);
-            } else if (event.keyCode === 65){
-                moveLeft(10);
-            } else if (event.keyCode === 68){
-                moveRight(10);
-            }
-        }, false);
-      }
-      </script>
-
-        <script>
+       <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyB6tUD-ar7ENW8y3vh5Y-HPmpICCxrEwe8",
                 authDomain: "javawebsite-ab223.firebaseapp.com",
@@ -91,11 +40,62 @@
                 messagingSenderId: "372498914074",
                 appId: "1:372498914074:web:b4687c7c7dbae9b9e0eaa3",
                 measurementId: "G-SJEERR0S09"
+                
+
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
 
+            window.onload = function() {
+            var c = document.getElementById("PlayZone");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("ghost");
+            var img = document.getElementById("hunter");
+
+            var lastX = 180;
+            var lastY = 180;
+            var width = 40;
+            var height = 40;
+
+            ctx.drawImage(img, lastX, lastY, width, height);
+
+            function moveUp(amount) {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.drawImage(img, lastX, lastY - amount, width, height);
+                lastY = lastY - amount
+            }
+
+            function moveDown(amount) {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.drawImage(img, lastX, lastY + amount, width, height);
+                lastY = lastY + amount;
+            }
+
+            function moveLeft(amount) {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.drawImage(img, lastX - amount, lastY, width, height);
+                lastX = lastX - amount
+            }
+
+            function moveRight(amount) {
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.drawImage(img, lastX + amount, lastY, width, height);
+                lastX = lastX + amount;
+            }
+
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 87) {
+                    moveUp(10);
+                } else if (event.keyCode === 83){
+                    moveDown(10);
+                } else if (event.keyCode === 65){
+                    moveLeft(10);
+                } else if (event.keyCode === 68){
+                    moveRight(10);
+                }
+            }, false);
+        }
             function start() {
                 let user = document.getElementById('username').value;
                 let position = Math.random()  
