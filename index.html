@@ -12,7 +12,7 @@
         </style>
     </head>
     <body>
-        <h1>Ghost Hunter</h1>
+        <h1>Ghost Hunter!!</h1>
         <div id="play-page" class="">
             <p>Username:
                 <input id = "username" type = "text"/>
@@ -68,12 +68,21 @@
                     var img = document.getElementById("hunter");
                     var enemyImg = document.getElementById('ghost');
                 }
+<<<<<<< HEAD
 
 
+=======
+                var lastX = 180;
+                var lastY = 180;
+>>>>>>> 714184f2abf5b8a1046f87151f77d9db21bd7bcc
                 var width = 40;
                 var height = 40;
+                var rightBorder = canvas.width - img.width;
 
+<<<<<<< HEAD
+               
                 ctx.drawImage(img, lastX, lastY, width, height);
+<<<<<<< HEAD
 
                 //enemy information and drawing
                 firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
@@ -107,9 +116,25 @@
                     firebase.firestore().collection('Players').doc(user).update({
                         'yPos': lastY
                     })
+=======
+=======
+                ctx.drawImage(img, lastX, lastY, width, height
+                
                 }
-
+>>>>>>> f62bb52d08af0f667bca6049fe9f187d859c57d2
+                //goes up 1
+                function moveUp(amount) {
+                    if (lastY > 0) {
+                        ctx.clearRect(0, 0, c.width, c.height);
+                        ctx.drawImage(img, lastX, lastY - amount, width, height);
+                        lastY = lastY - amount;
+                    }
+>>>>>>> 714184f2abf5b8a1046f87151f77d9db21bd7bcc
+                }
+                //goes down 1
                 function moveDown(amount) {
+                    console.log(lastY);
+                   if (lastY < 550) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
                     firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
@@ -124,12 +149,17 @@
                     console.log("error getting doc:", error);
                 });
                     lastY = lastY + amount;
+<<<<<<< HEAD
                     firebase.firestore().collection('Players').doc(user).update({
                         'yPos': lastY
                     })
+=======
+                   }
+>>>>>>> 714184f2abf5b8a1046f87151f77d9db21bd7bcc
                 }
-
+                //goes left 1
                 function moveLeft(amount) {
+                    if(lastX > 0 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
                     firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
@@ -144,12 +174,17 @@
                     console.log("error getting doc:", error);
                 });
                     lastX = lastX - amount
+<<<<<<< HEAD
                     firebase.firestore().collection('Players').doc(user).update({
                         'xPos': lastX
                     })
+=======
+                    }
+>>>>>>> 714184f2abf5b8a1046f87151f77d9db21bd7bcc
                 }
-
+                //goes right 1
                 function moveRight(amount) {
+                    if (lastX < 550 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
                     firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
@@ -164,13 +199,17 @@
                     console.log("error getting doc:", error);
                 });
                     lastX = lastX + amount;
+<<<<<<< HEAD
                     firebase.firestore().collection('Players').doc(user).update({
                         'xPos': lastX
                     })
+=======
+                    }
+>>>>>>> 714184f2abf5b8a1046f87151f77d9db21bd7bcc
                 }
 
                 document.addEventListener("keydown", function (event) {
-                    if (event.keyCode === 87) {
+                    if (event.keyCode === 87 && lastX>0) {
                         moveUp(10);
                     } else if (event.keyCode === 83){
                         moveDown(10);
@@ -199,4 +238,4 @@
             
         </script>
     </body>
-</html>
+</html>                  
