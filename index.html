@@ -25,11 +25,13 @@
 
         <canvas id="PlayZone" width= "600" height = "600" style="border:2px solid black" ></canvas>
         <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
+        <img id= "hunter" src = "https://tse1.mm.bing.net/th?id=OIP.9dqPj_o8pAZMySoibk-LQQHaRY&pid=Api&P=0&w=300&h=300" width="20px" height="20px" alt="Destroyer">
 
        <script>window.onload = function() {
         var c = document.getElementById("PlayZone");
         var ctx = c.getContext("2d");
         var img = document.getElementById("ghost");
+        var img = document.getElementById("hunter");
 
         var lastX = 180;
         var lastY = 180;
