@@ -147,7 +147,7 @@
             };
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
-            firebase.analytics();
+            //firebase.analytics();
  
             //sets role of player as hunter or ghost
             let position = Math.random() 
@@ -162,6 +162,8 @@
                     ghostTransparency = 1.0;
                     hunterTransparency = 1.0;
                 }
+                console.log(position)
+
             let enemyOne;
             let enemyOneUsername = prompt("1st enemy username?");
             let enemyTwo;
@@ -674,7 +676,12 @@
                 }, false);
             }
 
+
             function start() {
+                console.log(user,
+position,
+lastX,
+lastY)
                 startTimer();
                 user = document.getElementById('username').value; 
                 firebase.firestore().collection('Players').doc(user).set({
