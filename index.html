@@ -143,21 +143,6 @@
             var lastX = Math.floor(Math.random()*600);
             var lastY = Math.floor(Math.random()*600);
 
-            // function enemyOneUsernameWin() {
-            //     let xDistanceOne = Math.abs(enemyOne.xPos-user.xPos);
-            //     let yDistanceOne = Math.abs(enemyOne.yPos-user.yPos);
-            //     let xDistanceTwo = Math.abs(enemyTwo.xPos-user.xPos);
-            //     let yDistanceTwo = Math.abs(enemyTwo.yPos-user.yPos);
-            //     let xDistanceThree = Math.abs(enemyThree.xPos-user.xPos);
-            //     let yDistanceThree = Math.abs(enemyThree.yPos-user.yPos);
-                
-            //     if (user.position == 'hunter') {
-            //         if((xDistanceOne <= 30 || yDistanceOne <=30) && enemyThree.position == 'ghost') {
-            //             alert("Winner winner chicken dinner for the hunters!");
-            //         };
-            //     };
-            // };
- 
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
@@ -247,25 +232,18 @@
                                 ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
-                                console.log(lastX)
-                                console.log(enemyOne.xPos)
-
                                 if(position == 'hunter') {
                                     if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
-                                        console.log("winner!")
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
                                     }
-
                                 }
-
-                                // let xDistanceOne = Math.abs(enemyOne.xPos-user.xPos);
-                                // let yDistanceOne = Math.abs(enemyOne.yPos-user.yPos);
-                                // console.log(enemyOne.xPos)
-                                // console.log(enemyOne.ypos)
-                                // if (user.position == 'hunter') {
-                                //     if(yDistanceOne <= 100 && enemyOne.position == 'ghost') {
-                                //         console.log("Winner winner chicken dinner for the hunters!");
-                                //     };
-                                // };
                             } else {
                                 console.log("no such doc");
                             }
@@ -284,13 +262,18 @@
                                 ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
-                                // let xDistanceTwo = Math.abs(enemyTwo.xPos-user.xPos);
-                                // let yDistanceTwo = Math.abs(enemyTwo.yPos-user.yPos);
-                                // if (user.position == 'hunter') {
-                                //     if(yDistanceTwo <= 100 && enemyTwo.position == 'ghost') {
-                                //         console.log("Winner winner chicken dinner for the hunters!");
-                                //     };
-                                // };
+                                if(position == 'hunter') {
+                                    if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                             } else {
                                 console.log("no such doc");
                             }
@@ -309,13 +292,18 @@
                                 ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                                 //win cond
-                                // let xDistanceThree = Math.abs(enemyThree.xPos-user.xPos);
-                                // let yDistanceThree = Math.abs(enemyThree.yPos-user.yPos);
-                                // if (user.position == 'hunter') {
-                                //     if(yDistanceThree <= 100 && enemyThree.position == 'ghost') {
-                                //         console.log("Winner winner chicken dinner for the hunters!");
-                                //     };
-                                // };
+                                if(position == 'hunter') {
+                                    if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                             } else {
                                 console.log("no such doc");
                             }
@@ -346,6 +334,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -363,6 +364,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -380,6 +394,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -391,8 +418,8 @@
                         'yPos': lastY
                     })
                    };
-                   //enemyOneUsernameWin();
                 }
+
                 //goes left 1
                 function moveLeft(amount) {
                     if(lastX > 0 ){
@@ -409,6 +436,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -426,6 +466,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -443,6 +496,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -454,8 +520,8 @@
                         'xPos': lastX
                     })
                     }
-                    //enemyOneUsernameWin();
                 }
+
                 //goes right 1
                 function moveRight(amount) {
                     if (lastX < 550 ){
@@ -472,6 +538,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyOne.xPos + width && lastX + width > enemyOne.xPos && lastY < enemyOne.yPos + height && lastY + height > enemyOne.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -489,6 +568,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyTwo.xPos + width && lastX + width > enemyTwo.xPos && lastY < enemyTwo.yPos + height && lastY + height > enemyTwo.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
@@ -506,6 +598,19 @@
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
+                            //win cond
+                            if(position == 'hunter') {
+                                    if(lastX < enemyThree.xPos + width && lastX + width > enemyThree.xPos && lastY < enemyThree.yPos + height && lastY + height > enemyThree.yPos) {
+                                        alert("winner winner chicken dinner!")
+                                        deleteChars();
+                                        let restart = prompt("Play again? Reply y/n");
+                                        console.log(restart);
+                                        if (restart == 'y') {
+                                            window.location.reload();
+                                        }
+                                        return;
+                                    }
+                                }
                         } else {
                             console.log("no such doc");
                         }
