@@ -20,6 +20,29 @@
         </style>
          
         <script type="text/javascript">
+            function deleteChars() {
+                firebase.firestore().collection("Players").doc(enemyOneUsername).delete().then(function() {
+                    console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                    console.error("Error removing document: ", error);
+                });
+                firebase.firestore().collection("Players").doc(enemyTwoUsername).delete().then(function() {
+                    console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                    console.error("Error removing document: ", error);
+                });
+                firebase.firestore().collection("Players").doc(enemyThreeUsername).delete().then(function() {
+                    console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                    console.error("Error removing document: ", error);
+                });
+                firebase.firestore().collection("Players").doc(user).delete().then(function() {
+                    console.log("Document successfully deleterd!");
+                }).catch(function(error) {
+                    console.log("Error removing document: ", error);
+                });
+            }
+
             function startTimer(){
                 var timer = document.getElementById("myTimer").innerHTML;
                 var arr = timer.split(":");
@@ -29,8 +52,12 @@
                 if (sec == 0) {
                     if (min == 0){
                         if (hour == 0){
-                          alert("Game Over!");
-                          window.location.reload();
+                          alert("Game Over! Ghosts continue to haunt another day!");
+                          deleteChars();
+                          let restart = prompt("Play again? Reply y/n");
+                          if (restart.lower == 'y') {
+                            window.location.reload();
+                          }
                           return;
                         }
                         hour --;
@@ -54,20 +81,20 @@
             
             }
         </script>
-    <p><span id="myTimer" style="color: #000; font-size: 100%;">00:02:00</span></p>
-    <button onclick="startTimer();">Play Now!</button>
-    
     </head>
     <body>
         <h1>Ghost Hunter!!</h1>
+        
         <div id="play-page" class="">
             <p>Username:
                 <input id = "username" type = "text"/>
             </p>
-            <p>
-                <button onclick='start();'>Play Now!</button>
-            </p>
         </div>
+        <p>
+            <span id="myTimer" style="color: #000; font-size: 100%;">00:01:00</span>
+            <button onclick="start();">Play Now!</button>
+        </p>
+        
         
  
         <canvas id="PlayZone" width= "600" height = "600" style="border:2px solid black" ></canvas>
@@ -140,10 +167,8 @@
                         enemyOne = doc.data();
                         if (enemyOne.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
-                            console.log(ctx.globalAlpha)
                         } else {
                             ctx.globalAlpha = ghostTransparency;
-                            console.log(ctx.globalAlpha)
                         }
                         ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -159,10 +184,8 @@
                         enemyTwo = doc.data();
                         if (enemyTwo.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
-                            console.log(ctx.globalAlpha)
                         } else {
                             ctx.globalAlpha = ghostTransparency;
-                            console.log(ctx.globalAlpha)
                         }
                         ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -178,10 +201,8 @@
                         enemyThree = doc.data();
                         if (enemyThree.position == 'hunter') {
                             ctx.globalAlpha = hunterTransparency;
-                            console.log(ctx.globalAlpha)
                         } else {
                             ctx.globalAlpha = ghostTransparency;
-                            console.log(ctx.globalAlpha)
                         }
                         ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                         ctx.globalAlpha = 1.0;
@@ -204,10 +225,8 @@
                                 enemyOne = doc.data();
                                 if (enemyOne.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
-                                    console.log(ctx.globalAlpha)
                                 } else {
                                     ctx.globalAlpha = ghostTransparency;
-                                    console.log(ctx.globalAlpha)
                                 }
                                 ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
@@ -223,10 +242,8 @@
                                 enemyTwo = doc.data();
                                 if (enemyTwo.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
-                                    console.log(ctx.globalAlpha)
                                 } else {
                                     ctx.globalAlpha = ghostTransparency;
-                                    console.log(ctx.globalAlpha)
                                 }
                                 ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
@@ -242,10 +259,8 @@
                                 enemyThree = doc.data();
                                 if (enemyThree.position == 'hunter') {
                                     ctx.globalAlpha = hunterTransparency;
-                                    console.log(ctx.globalAlpha)
                                 } else {
                                     ctx.globalAlpha = ghostTransparency;
-                                    console.log(ctx.globalAlpha)
                                 }
                                 ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
@@ -274,10 +289,8 @@
                             enemyOne = doc.data();
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -293,10 +306,8 @@
                             enemyTwo = doc.data();
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -312,10 +323,8 @@
                             enemyThree = doc.data();
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -342,10 +351,8 @@
                             enemyOne = doc.data();
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -361,10 +368,8 @@
                             enemyTwo = doc.data();
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -380,10 +385,8 @@
                             enemyThree = doc.data();
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -410,10 +413,8 @@
                             enemyOne = doc.data();
                             if (enemyOne.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -429,10 +430,8 @@
                             enemyTwo = doc.data();
                             if (enemyTwo.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -448,10 +447,8 @@
                             enemyThree = doc.data();
                             if (enemyThree.position == 'hunter') {
                                 ctx.globalAlpha = hunterTransparency;
-                                console.log(ctx.globalAlpha)
                             } else {
                                 ctx.globalAlpha = ghostTransparency;
-                                console.log(ctx.globalAlpha)
                             }
                             ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                             ctx.globalAlpha = 1.0;
@@ -483,6 +480,7 @@
             
  
             function start() {
+                startTimer();
                 user = document.getElementById('username').value; 
                 firebase.firestore().collection('Players').doc(user).set({
                     username: user,
