@@ -12,7 +12,7 @@
         </style>
     </head>
     <body>
-        <h1>Ghost Hunter</h1>
+        <h1>Ghost Hunter!!</h1>
         <div id="play-page" class="">
             <p>Username:
                 <input id = "username" type = "text"/>
@@ -27,7 +27,8 @@
         <img id= "ghost" src = "https://pngimg.com/uploads/ghost/ghost_PNG81.png" width="20px" height="20px" alt="Seeker">
         <img id= "hunter" src = "https://tse1.mm.bing.net/th?id=OIP.9dqPj_o8pAZMySoibk-LQQHaRY&pid=Api&P=0&w=300&h=300" width="20px" height="20px" alt="Destroyer">
 
-       
+       <script>
+      </script>
 
         <script>
             var firebaseConfig = {
@@ -44,16 +45,6 @@
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
 
-            window.onload = function() {
-            var c = document.getElementById("PlayZone");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("ghost");
-            var img = document.getElementById("hunter");
-                //This code is for the ghost which is label as var imgGhost
-            var lastX = 180;
-            var lastY = 180;
-            var width = 40;
-            var height = 40;
             //sets role of player as hunter or ghost
             let position = Math.random() 
             if (position > 0.5) {
@@ -61,7 +52,7 @@
                 } else {
                     position = "ghost";
                 }
-            
+            //creates the map (box)
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
@@ -76,35 +67,46 @@
                 var lastY = 180;
                 var width = 40;
                 var height = 40;
+                var rightBorder = canvas.width - img.width;
 
+               
                 ctx.drawImage(img, lastX, lastY, width, height);
-
+                //goes up 1
                 function moveUp(amount) {
-                    ctx.clearRect(0, 0, c.width, c.height);
-                    ctx.drawImage(img, lastX, lastY - amount, width, height);
-                    lastY = lastY - amount
+                    if (lastY > 0) {
+                        ctx.clearRect(0, 0, c.width, c.height);
+                        ctx.drawImage(img, lastX, lastY - amount, width, height);
+                        lastY = lastY - amount;
+                    }
                 }
-
+                //goes down 1
                 function moveDown(amount) {
+                    console.log(lastY);
+                   if (lastY < 550) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
                     lastY = lastY + amount;
+                   }
                 }
-
+                //goes left 1
                 function moveLeft(amount) {
+                    if(lastX > 0 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
                     lastX = lastX - amount
+                    }
                 }
-
+                //goes right 1
                 function moveRight(amount) {
+                    if (lastX < 550 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
                     lastX = lastX + amount;
+                    }
                 }
 
                 document.addEventListener("keydown", function (event) {
-                    if (event.keyCode === 87) {
+                    if (event.keyCode === 87 && lastX>0) {
                         moveUp(10);
                     } else if (event.keyCode === 83){
                         moveDown(10);
@@ -131,4 +133,4 @@
             
         </script>
     </body>
-</html>
+</html>                  
