@@ -94,17 +94,24 @@
  
             //sets role of player as hunter or ghost
             let position = Math.random() 
-            let transparency;
+            let ghostTransparency;
+            let hunterTransparency;
             if (position > 0.5) {
                     position = "hunter";
-                    transparency = 0.0;
+                    ghostTransparency = 0.0;
+                    hunterTransparency = 1.0;
                 } else {
                     position = "ghost";
-                    transparency = 1.0;
+                    ghostTransparency = 1.0;
+                    hunterTransparency = 1.0;
                 }
             let user;
-            let enemy;
-            let enemyUsername = prompt("enemy username?");
+            let enemyOne;
+            let enemyOneUsername = prompt("1st enemy username?");
+            let enemyTwo;
+            let enemyTwoUsername = prompt("2nd enemy username?");
+            let enemyThree;
+            let enemyThreeUsername = prompt("3rd enemy username?");
             var lastX = 180;
             var lastY = 180;
  
@@ -127,13 +134,56 @@
                 ctx.drawImage(img, lastX, lastY, width, height);
  
                 //enemy information and drawing
-                //
-                firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
+                firebase.firestore().collection('Players').doc(enemyOneUsername).get().then(function(doc) {
                     if (doc.exists) {
                         console.log(doc.data());
-                        enemy = doc.data();
-                        ctx.globalAlpha = transparency;
-                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                        enemyOne = doc.data();
+                        if (enemyOne.position == 'hunter') {
+                            ctx.globalAlpha = hunterTransparency;
+                            console.log(ctx.globalAlpha)
+                        } else {
+                            ctx.globalAlpha = ghostTransparency;
+                            console.log(ctx.globalAlpha)
+                        }
+                        ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
+                firebase.firestore().collection('Players').doc(enemyTwoUsername).get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemyTwo = doc.data();
+                        if (enemyTwo.position == 'hunter') {
+                            ctx.globalAlpha = hunterTransparency;
+                            console.log(ctx.globalAlpha)
+                        } else {
+                            ctx.globalAlpha = ghostTransparency;
+                            console.log(ctx.globalAlpha)
+                        }
+                        ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
+                        ctx.globalAlpha = 1.0;
+                    } else {
+                        console.log("no such doc");
+                    }
+                }).catch(function(error) {
+                    console.log("error getting doc:", error);
+                });
+                firebase.firestore().collection('Players').doc(enemyThreeUsername).get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        enemyThree = doc.data();
+                        if (enemyThree.position == 'hunter') {
+                            ctx.globalAlpha = hunterTransparency;
+                            console.log(ctx.globalAlpha)
+                        } else {
+                            ctx.globalAlpha = ghostTransparency;
+                            console.log(ctx.globalAlpha)
+                        }
+                        ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                         ctx.globalAlpha = 1.0;
                     } else {
                         console.log("no such doc");
@@ -148,12 +198,56 @@
                     if (lastY > 0) {
                         ctx.clearRect(0, 0, c.width, c.height);
                         ctx.drawImage(img, lastX, lastY - amount, width, height);
-                        firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
+                        firebase.firestore().collection('Players').doc(enemyOneUsername).get().then(function(doc) {
                             if (doc.exists) {
                                 console.log(doc.data());
-                                enemy = doc.data();
-                                ctx.globalAlpha = transparency;
-                                ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
+                                enemyOne = doc.data();
+                                if (enemyOne.position == 'hunter') {
+                                    ctx.globalAlpha = hunterTransparency;
+                                    console.log(ctx.globalAlpha)
+                                } else {
+                                    ctx.globalAlpha = ghostTransparency;
+                                    console.log(ctx.globalAlpha)
+                                }
+                                ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
+                                ctx.globalAlpha = 1.0;
+                            } else {
+                                console.log("no such doc");
+                            }
+                        }).catch(function(error) {
+                            console.log("error getting doc:", error);
+                        });
+                        firebase.firestore().collection('Players').doc(enemyTwoUsername).get().then(function(doc) {
+                            if (doc.exists) {
+                                console.log(doc.data());
+                                enemyTwo = doc.data();
+                                if (enemyTwo.position == 'hunter') {
+                                    ctx.globalAlpha = hunterTransparency;
+                                    console.log(ctx.globalAlpha)
+                                } else {
+                                    ctx.globalAlpha = ghostTransparency;
+                                    console.log(ctx.globalAlpha)
+                                }
+                                ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
+                                ctx.globalAlpha = 1.0;
+                            } else {
+                                console.log("no such doc");
+                            }
+                        }).catch(function(error) {
+                            console.log("error getting doc:", error);
+                        });
+                        firebase.firestore().collection('Players').doc(enemyThreeUsername).get().then(function(doc) {
+                            if (doc.exists) {
+                                console.log(doc.data());
+                                enemyThree = doc.data();
+                                if (enemyThree.position == 'hunter') {
+                                    ctx.globalAlpha = hunterTransparency;
+                                    console.log(ctx.globalAlpha)
+                                } else {
+                                    ctx.globalAlpha = ghostTransparency;
+                                    console.log(ctx.globalAlpha)
+                                }
+                                ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
                                 ctx.globalAlpha = 1.0;
                             } else {
                                 console.log("no such doc");
@@ -174,19 +268,63 @@
                    if (lastY < 550) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
-                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
-                    if (doc.exists) {
-                        console.log(doc.data());
-                        enemy = doc.data();
-                        ctx.globalAlpha = transparency;
-                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
-                        ctx.globalAlpha = 1.0;
-                    } else {
-                        console.log("no such doc");
-                    }
-                }).catch(function(error) {
-                    console.log("error getting doc:", error);
-                });
+                    firebase.firestore().collection('Players').doc(enemyOneUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyOne = doc.data();
+                            if (enemyOne.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyTwoUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyTwo = doc.data();
+                            if (enemyTwo.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyThreeUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyThree = doc.data();
+                            if (enemyThree.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
                     lastY = lastY + amount;
                     firebase.firestore().collection('Players').doc(user).update({
                         'yPos': lastY
@@ -198,19 +336,63 @@
                     if(lastX > 0 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
-                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
-                    if (doc.exists) {
-                        console.log(doc.data());
-                        enemy = doc.data();
-                        ctx.globalAlpha = transparency;
-                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
-                        ctx.globalAlpha = 1.0;
-                    } else {
-                        console.log("no such doc");
-                    }
-                }).catch(function(error) {
-                    console.log("error getting doc:", error);
-                });
+                    firebase.firestore().collection('Players').doc(enemyOneUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyOne = doc.data();
+                            if (enemyOne.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyTwoUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyTwo = doc.data();
+                            if (enemyTwo.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyThreeUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyThree = doc.data();
+                            if (enemyThree.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
                     lastX = lastX - amount
                     firebase.firestore().collection('Players').doc(user).update({
                         'xPos': lastX
@@ -222,19 +404,63 @@
                     if (lastX < 550 ){
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
-                    firebase.firestore().collection('Players').doc(enemyUsername).get().then(function(doc) {
-                    if (doc.exists) {
-                        console.log(doc.data());
-                        enemy = doc.data();
-                        ctx.globalAlpha = transparency;
-                        ctx.drawImage(document.getElementById(enemy.position), enemy.xPos, enemy.yPos, width, height);
-                        ctx.globalAlpha = 1.0;
-                    } else {
-                        console.log("no such doc");
-                    }
-                }).catch(function(error) {
-                    console.log("error getting doc:", error);
-                });
+                    firebase.firestore().collection('Players').doc(enemyOneUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyOne = doc.data();
+                            if (enemyOne.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyOne.position), enemyOne.xPos, enemyOne.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyTwoUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyTwo = doc.data();
+                            if (enemyTwo.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyTwo.position), enemyTwo.xPos, enemyTwo.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
+                    firebase.firestore().collection('Players').doc(enemyThreeUsername).get().then(function(doc) {
+                        if (doc.exists) {
+                            console.log(doc.data());
+                            enemyThree = doc.data();
+                            if (enemyThree.position == 'hunter') {
+                                ctx.globalAlpha = hunterTransparency;
+                                console.log(ctx.globalAlpha)
+                            } else {
+                                ctx.globalAlpha = ghostTransparency;
+                                console.log(ctx.globalAlpha)
+                            }
+                            ctx.drawImage(document.getElementById(enemyThree.position), enemyThree.xPos, enemyThree.yPos, width, height);
+                            ctx.globalAlpha = 1.0;
+                        } else {
+                            console.log("no such doc");
+                        }
+                    }).catch(function(error) {
+                        console.log("error getting doc:", error);
+                    });
                     lastX = lastX + amount;
                     firebase.firestore().collection('Players').doc(user).update({
                         'xPos': lastX
@@ -272,4 +498,3 @@
         </script>
     </body>
 </html>
-
