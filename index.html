@@ -12,9 +12,14 @@
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+            h1 {
+                text-align: center;
+                font-size: 40px;
+
+            }
         p {
           text-align: center;
-          font-size: 60px;
+          font-size: 20px;
           margin-top: 0px;
         }
         </style>
@@ -93,14 +98,16 @@
     </head>
     <body>
         <h1>Ghost Hunter!!</h1>
+
         
         <div id="play-page" class="">
+            <p style = "font-style: italic; font-size: 15px;">If ghost, then run away and hide. If hunter, then seek and destroy.</p>
             <p>Username:
                 <input id = "username" type = "text"/>
             </p>
         </div>
         <p>
-            <span id="myTimer" style="color: #000; font-size: 100%;">00:01:00</span>
+            <span id="myTimer" style="color: #000; font-size: 20px;">00:01:00</span>
             <button onclick="start();">Play Now!</button>
         </p>
         
@@ -652,8 +659,7 @@
                     }
                 }, false);
             }
-            
- 
+
             function start() {
                 startTimer();
                 user = document.getElementById('username').value; 
@@ -663,10 +669,9 @@
                     xPos: lastX,
                     yPos: lastY
                 })
- 
                 document.getElementById('play-page').innerHTML = '<p>Welcome ' + user + '! You are a ' + position + '!</p>';
                 canvas();
-            }
+            } 
  
         </script>
     </body>
