@@ -89,40 +89,34 @@
                 }).catch(function(error) {
                     console.log("error getting doc:", error);
                 });
-                
-
-                function moveUp(amount) {
-                    ctx.clearRect(0, 0, c.width, c.height);
-                    ctx.drawImage(img, lastX, lastY - amount, width, height);
-                    firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
-                    if (doc.exists) {
-                        console.log(doc.data());
-                        enemy = doc.data();
-                        ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
-                    } else {
-                        console.log("no such doc");
-                    }
-                }).catch(function(error) {
-                    console.log("error getting doc:", error);
-                });
-                    lastY = lastY - amount
-                    firebase.firestore().collection('Players').doc(user).update({
-                        'yPos': lastY
-                    })
-                ctx.drawImage(img, lastX, lastY, width, height
-                
-                }
+            
+                    
                 //goes up 1
                 function moveUp(amount) {
                     if (lastY > 0) {
                         ctx.clearRect(0, 0, c.width, c.height);
                         ctx.drawImage(img, lastX, lastY - amount, width, height);
-                        lastY = lastY - amount;
+                        firebase.firestore().collection('Players').doc('20').get().then(function(doc) {
+                            if (doc.exists) {
+                                console.log(doc.data());
+                                enemy = doc.data();
+                                ctx.drawImage(enemyImg, enemy.xPos, enemy.yPos, width, height);
+                            } else {
+                                console.log("no such doc");
+                            }
+                        }).catch(function(error) {
+                            console.log("error getting doc:", error);
+                        });
+                            lastY = lastY - amount
+                            firebase.firestore().collection('Players').doc(user).update({
+                                'yPos': lastY
+                            })
+                        ctx.drawImage(img, lastX, lastY, width, height)
                     }
                 }
+                
                 //goes down 1
                 function moveDown(amount) {
-                    console.log(lastY);
                    if (lastY < 550) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
