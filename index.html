@@ -52,7 +52,7 @@
                 } else {
                     position = "ghost";
                 }
-            
+            //creates the map (box)
             function canvas() {
                 var c = document.getElementById("PlayZone");
                 var ctx = c.getContext("2d");
@@ -69,25 +69,25 @@
                 var height = 40;
 
                 ctx.drawImage(img, lastX, lastY, width, height);
-
+                //goes up 1
                 function moveUp(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY - amount, width, height);
                     lastY = lastY - amount
                 }
-
+                //goes down 1
                 function moveDown(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX, lastY + amount, width, height);
                     lastY = lastY + amount;
                 }
-
+                //goes left 1
                 function moveLeft(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX - amount, lastY, width, height);
                     lastX = lastX - amount
                 }
-
+                //goes right 1
                 function moveRight(amount) {
                     ctx.clearRect(0, 0, c.width, c.height);
                     ctx.drawImage(img, lastX + amount, lastY, width, height);
