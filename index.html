@@ -51,9 +51,26 @@
 
 
             let userInfo; 
+            let timerStart;
+            let mechanics;
 
             function startTimer(){
-                     
+                firebase.firestore().collection("Game").doc('Mechanics').get().then(function(doc) {
+                    if (doc.exists) {
+                        console.log(doc.data());
+                        mechanics = doc.data();
+                        if (mechanics.timerStart == false) {
+                            firebase.firestore().collection('Game').doc('Mechanics').update({
+                                'timerStart': true,
+                            })
+                        }
+                        console.log(mechanics.timerStart);
+                    }
+                }
+            };
+
+            function updateTimer() {
+
                 var timer = document.getElementById("myTimer").innerHTML;
                 var arr = timer.split(":");
                 var hour = arr[0];
@@ -62,9 +79,6 @@
                 if (sec == 0) {
                     if (min == 0){
                         if (hour == 0){
-                            firebase.firestore().collection('Players').where("position", "==", "ghost").update({
-                                'win': true
-                            })
                           alert("Game Over! Ghosts continue to haunt another day!");
                           deleteChars();
                           let restart = prompt("Play again? Reply y/n");
@@ -107,7 +121,8 @@
             </p>
         </div>
         <p>
-            <span id="myTimer" style="color: #000; font-size: 20px;">00:01:00</span>
+            <span id='myTimer'>60 seconds</span>
+            <!-- <span id="myTimer" style="color: #000; font-size: 20px;">00:01:00</span> -->
             <button onclick="start();">Play Now!</button>
         </p>
         
